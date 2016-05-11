@@ -37,6 +37,14 @@ public class MainActivity extends MyActvity {
 
         ll = (LinearLayout) findViewById(R.id.listaViews);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ll.removeAllViewsInLayout();
+        arrayPV.clear();
         Cursor cursor = produtoDAO.getAllCursor(this);
         if(cursor.moveToFirst()) {
             do{
@@ -60,19 +68,6 @@ public class MainActivity extends MyActvity {
             });
             dlg.show();
         }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ll.removeAllViewsInLayout();
-        arrayPV.clear();
-        Cursor cursor = ProdutoDAO.getAllCursor(this);
-        cursor.moveToFirst();
-        do{
-            arrayPV.add(new ProdutoView(this, produtoDAO.getProdutoByCursor(cursor),ll));
-        }while (cursor.moveToNext());
 
         for (int x=0;x<arrayPV.size();x++){
             arrayPV.get(x).inflateViews();
